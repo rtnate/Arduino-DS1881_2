@@ -2,7 +2,7 @@
 
 using namespace MaximDS;
 
-void Controller::begin(PotentiometerMode mode = PotentiometerPositions33)
+void Controller::begin(PotentiometerMode mode /* = PotentiometerPositions33 */)
 {
     i2c.begin();
     if (mode != PotentiometerPositions33)
@@ -11,7 +11,7 @@ void Controller::begin(PotentiometerMode mode = PotentiometerPositions33)
     }
 }
 
-void Controller::configure(PotentiometerMode mode, bool enableZeroCross = true, bool enableNVM = false)
+void Controller::configure(PotentiometerMode mode, bool enableZeroCross /* = true */, bool enableNVM /* = false */)
 {
     uint8_t configureRegister = ConfigureRegisterBase;
     configureRegister |= NVMEnableValue(enableNVM);
@@ -21,6 +21,7 @@ void Controller::configure(PotentiometerMode mode, bool enableZeroCross = true, 
     transmitByte(configureRegister);
     endTransmission();
 }
+
 void Controller::writePot0(uint8_t value)
 {
     uint8_t data = GetPotValueByte(false, value);
