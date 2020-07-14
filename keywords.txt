@@ -5,13 +5,20 @@
 #######################################
 # Datatypes (KEYWORD1)
 #######################################
-
+DS1881			KEYWORD1
+DS1882			KEYWORD2
 
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-
+begin			KEYWORD2
+configure		KEYWORD2
+writePot0		KEYWORD2
+writePot1		KEYWORD2
+writePots		KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
 #######################################
+PotentiometerPositions63		LITERAL1
+PotentiometerPositions33		LITERAL1
