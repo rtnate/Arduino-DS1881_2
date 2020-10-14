@@ -92,7 +92,7 @@ namespace MaximDS
          * @param address The 3 bit pin-programmed slave address
          * @param i2cObj A reference to the TwoWire object for transmission
          */
-        Controller(uint8_t address, TwoWire &i2cObj) : slaveAddress(GetSlaveAddress(address)), i2c(i2cObj){};
+        Controller(uint8_t address, TwoWire &i2cObj) :  i2c(i2cObj), slaveAddress(GetSlaveAddress(address)){};
 
         /**
          * @brief Initialize the controller
