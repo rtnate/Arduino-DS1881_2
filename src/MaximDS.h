@@ -80,6 +80,22 @@ namespace MaximDS
         };
 
         /**
+         * @brief Base address for MaximDS I2C slaves
+         */
+        static constexpr uint8_t SlaveAddressBase = 0x28;
+
+        /**
+         * @brief Generate the slave address for a MaximDS device
+         * 
+         * @param value The 3 bit pin-programmed address
+         * @return constexpr uint8_t The 7 bit I2C slave address
+         */
+        static inline constexpr uint8_t GetSlaveAddress(uint8_t value)
+        {
+            return (SlaveAddressBase | (value & 0x7));
+        }
+
+        /**
          * @brief Construct a new Controller object using the default Wire object
          * 
          * @param address The 3 bit pin-programmed slave address
@@ -107,30 +123,52 @@ namespace MaximDS
          * @param mode The PotentiometerMode to use (number of wiper positions)
          * @param enableZeroCross Set to false to disable the zero-crossing detector
          * @param enableNVM Set to true to enable non-volatile wiper setting storage
+         * @return true on success, false on bus error
          */
-        void configure(PotentiometerMode mode, bool enableZeroCross = true, bool enableNVM = false);
+        bool configure(PotentiometerMode mode, bool enableZeroCross = true, bool enableNVM = false);
 
         /**
          * @brief Sets the value of Potentiomer 0
          * 
          * @param value The 6 bit wiper posistion (0 == Fully On, 33 or 63 == MUTE)
+         * @return The status code from the Wire interface:
+         *          0 .. success
+         *          1 .. length to long for buffer
+         *          2 .. address send, NACK received
+         *          3 .. data send, NACK received
+         *          4 .. other twi error (lost bus arbitration, bus error, ..)
+         *          5 .. timeout
          */
-        void writePot0(uint8_t value);
+        uint8_t writePot0(uint8_t value);
 
         /**
          * @brief Sets the value of Potentiomer 1
          * 
          * @param value The 6 bit wiper posistion (0 == Fully On, 33 or 63 == MUTE)
+         * @return The status code from the Wire interface:
+         *          0 .. success
+         *          1 .. length to long for buffer
+         *          2 .. address send, NACK received
+         *          3 .. data send, NACK received
+         *          4 .. other twi error (lost bus arbitration, bus error, ..)
+         *          5 .. timeout
          */
-        void writePot1(uint8_t value);
+        uint8_t writePot1(uint8_t value);
 
         /**
          * @brief Sets the value of both potentiometers  (0 == Fully On, 33 or 63 == MUTE)
          * 
          * @param pot0 The 6 bit wiper posistion for Potentiomer 0
          * @param pot1 The 6 bit wiper posistion for Potentiomer 1
+         * @return The status code from the Wire interface:
+         *          0 .. success
+         *          1 .. length to long for buffer
+         *          2 .. address send, NACK received
+         *          3 .. data send, NACK received
+         *          4 .. other twi error (lost bus arbitration, bus error, ..)
+         *          5 .. timeout
          */
-        void writePots(uint8_t pot0, uint8_t pot1);
+        uint8_t writePots(uint8_t pot0, uint8_t pot1);
 
     protected:
         /**
@@ -182,22 +220,6 @@ namespace MaximDS
         }
 
         /**
-         * @brief Base address for MaximDS I2C slaves
-         */
-        static constexpr uint8_t SlaveAddressBase = 0x28;
-
-        /**
-         * @brief Generate the slave address for a MaximDS device
-         * 
-         * @param value The 3 bit pin-programmed address
-         * @return constexpr uint8_t The 7 bit I2C slave address
-         */
-        static inline constexpr uint8_t GetSlaveAddress(uint8_t value)
-        {
-            return (SlaveAddressBase | (value & 0x7));
-        }
-
-        /**
          * @brief The base address for the configuration register
          */
         static constexpr uint8_t ConfigureRegisterBase = 0x80;
@@ -245,9 +267,9 @@ namespace MaximDS
         /**
          * @brief End a TwoWrite transmission
          */
-        void endTransmission()
+        uint8_t endTransmission()
         {
-            i2c.endTransmission();
+            return i2c.endTransmission();
         }
     };
 } // namespace MaximDS
