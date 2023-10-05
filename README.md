@@ -1,45 +1,17 @@
-# namespace `MaximDS`
+# DS1881_2 Arduino Library
 
 
+## Basic Usage
 
-## Summary
-
- Members                        | Descriptions                                
---------------------------------|---------------------------------------------
-`class `[``Controller``](#class_maxim_d_s_1_1_controller)    | Class for controlling a [MaximDS](#namespace_maxim_d_s) digital potentiomer (DS1881 or DS1882)
-# class `Controller` {#class_maxim_d_s_1_1_controller}
-
-
-Class for controlling a [MaximDS](#namespace_maxim_d_s) digital potentiomer (DS1881 or DS1882)
-
-
-
-## Summary
-
- Members                        | Descriptions                                
---------------------------------|---------------------------------------------
-`public inline  Controller(uint8_t address)` | Construct a new Device [Controller](#class_maxim_d_s_1_1_controller) object using the default Wire instance.
-`public inline  Controller(uint8_t address,TwoWire & i2cObj)` | Construct a new Device [Controller](#class_maxim_d_s_1_1_controller) object using the supplied TwoWire instance.
-`public void begin(`[`PotentiometerMode`](#class_maxim_d_s_1_1_controller_1acd744d60d5ff0489be1fdb9a03039fa1)` mode)` | Initializes the controller and configures the pot to the mode supplied (33 positions be default).
-`public bool configure(`[`PotentiometerMode`](#class_maxim_d_s_1_1_controller_1acd744d60d5ff0489be1fdb9a03039fa1)` mode,bool enableZeroCross,bool enableNVM)` | Set the configuration register of the digital pot.
-`public uint8_t writePot0(uint8_t value)` | Sets the value of Potentiometer 0.
-`public uint8_t writePot1(uint8_t value)` | Sets the value of Potentiometer 1.
-`public uint8_t writePots(uint8_t pot0,uint8_t pot1)` | Sets the value of both potentiometers (0 == Fully On, 33 or 63 == MUTE)
-`protected TwoWire & i2c` | Reference to the TwoWire object that controls data transmission.
-`protected const uint8_t slaveAddress` | The 7-bit I2C Slave address for the device.
-`protected inline constexpr uint8_t GetPotValueByte(bool index,uint8_t value)` | Get the 8-bit transmission byte for the supplied pot value.
-`protected inline void beginTransmission()` | Start a TwoWire transmission.
-`protected inline void transmitByte(uint8_t data)` | Transmit a byte over TwoWire.
-`protected inline uint8_t endTransmission()` | End a TwoWrite transmission.
-
-## Note on Class Names/Namespace 
+### Note on Class Names/Namespace 
 The controller class in the source code is MaximDS::Controller.  This is aliased 
 to DS1881 or DS1882 in the library header.  For simplicity I will use DS1882 as 
 the class name in the documentation, but one can use DS1881 and they are
 exactly the same.
-## Methods
 
-### `Controller(uint8_t address)`
+## Constructors
+
+### *DS1882(uint8_t address)*
 
 Construct a new Device Controller object using the default Wire instance.
 
@@ -61,7 +33,7 @@ H    |H     |H     |0x7
 #### Parameters
 * `address` The 3 bit pin-programmed slave address
 
-### `Controller(uint8_t address,TwoWire & i2cObj)`
+### *DS1882(uint8_t address,TwoWire & i2cObj)*
 
 Construct a new Device Controller object using the supplied TwoWire instance.
 
@@ -84,7 +56,9 @@ H    |H     |H     |0x7
 
 * `i2cObj` A reference to the TwoWire instance for transmission
 
-### `public void begin(`[`PotentiometerMode`](#Enums)` mode)`
+## Public Methods
+
+### *void begin([PotentiometerMode](#Enums) mode)*
 
 Initializes the controller and configures the pot to the mode supplied (33 positions be default).
 
@@ -94,7 +68,7 @@ Should be called in setup().
 * `mode` The PotentiometerMode to use (number of wiper positions) 
 
 
-### `public bool configure(`[`PotentiometerMode`](#class_maxim_d_s_1_1_controller_1acd744d60d5ff0489be1fdb9a03039fa1)` mode,bool enableZeroCross,bool enableNVM)` {#class_maxim_d_s_1_1_controller_1a8bd82d26b2476c449797cc4baffcced4}
+### *bool configure(PotentiometerMode mode, bool enableZeroCross, bool enableNVM)*
 
 Set the configuration register of the digital pot.
 
@@ -109,10 +83,6 @@ Use to explicitly set the configuration options, this
 
 
 * `enableNVM` Set to true to enable non-volatile wiper setting storage 
-
-
-
-
 
 #### Returns
 true on success, false on bus error
