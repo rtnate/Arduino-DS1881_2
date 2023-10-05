@@ -67,8 +67,9 @@ Should be called in setup().
 #### Parameters
 * `mode` The PotentiometerMode to use (number of wiper positions) 
 
+---
 
-### *bool configure(PotentiometerMode mode, bool enableZeroCross, bool enableNVM)*
+### `bool configure(`[`PotentiometerMode`](#Enums)` mode, bool enableZeroCross, bool enableNVM)`
 
 Set the configuration register of the digital pot.
 
@@ -118,4 +119,10 @@ Sets the value of both potentiometers (0 == Fully On, 33 or 63 == MUTE)
 #### Returns
 The status code from the Wire interface: 0 .. success 1 .. length to long for buffer 2 .. address send, NACK received 3 .. data send, NACK received 4 .. other twi error (lost bus arbitration, bus error, ..) 5 .. timeout
 
+## Enums
 
+### `PotentiometerMode`
+
+#### Members
+* `PotentiometerPositions63` Will use the pot with 63 wiper positions (0 max - 63 mute).
+* `PotentiometerPositions33` Will use the pot with 33 wiper position (0 max - 33+ mute).
