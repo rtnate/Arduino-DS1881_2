@@ -3,6 +3,36 @@
 
 ## Basic Usage
 
+```C++
+
+//Create a digital pot with address pins all low
+DS1882 digitalPot(0x0);
+
+void setup() {
+//Begin using the pot with 33 wiper positions
+    digitalPot.begin(PotentiometerPositions33);
+//Reconfigure the pot with 63 wiper positions, 
+//enable the zero crossing, and disable non-volatile memory
+    digitalPot.configure(PotentiometerPositions63, true, false);
+}
+
+void run() {
+//Mute Pot 0 and set Pot 1 to full
+    digitalPot.writePot0(63);
+    digitalPot.writePot1(0);
+    delay(3000);
+//Mute Pot 1 and set Pot 0 to full
+    digitalPot.writePot0(0);
+    digitalPot.writePot1(63);
+    delay(3000);
+//Set both pots to -12 db 
+    digitalPot.writePots(12, 12);
+    delay(3000);
+//Set Pot 0 to -18 db and Pot 1 to -4 db
+    digitalPot.writePots(18, 4);
+    delay(3000);
+}
+```
 ### Note on Class Names/Namespace 
 The controller class in the source code is MaximDS::Controller.  This is aliased 
 to DS1881 or DS1882 in the library header.  For simplicity I will use DS1882 as 
