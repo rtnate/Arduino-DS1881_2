@@ -32,70 +32,67 @@ Class for controlling a [MaximDS](#namespace_maxim_d_s) digital potentiomer (DS1
 `protected inline void transmitByte(uint8_t data)` | Transmit a byte over TwoWire.
 `protected inline uint8_t endTransmission()` | End a TwoWrite transmission.
 
-## Members
+## Note on Class Names/Namespace 
+The controller class in the source code is MaximDS::Controller.  This is aliased 
+to DS1881 or DS1882 in the library header.  For simplicity I will use DS1882 as 
+the class name in the documentation, but one can use DS1881 and they are
+exactly the same.
+## Methods
 
-### `public inline  Controller(uint8_t address)` {#class_maxim_d_s_1_1_controller_1a36218404814ebbce004d9b1651129bba}
+### `Controller(uint8_t address)`
 
-Construct a new Device [Controller](#class_maxim_d_s_1_1_controller) object using the default Wire instance.
+Construct a new Device Controller object using the default Wire instance.
 
 Takes a 3-bit address value corresponding to the state of the hardware pins:
 
 
-A2   |A1   |A0   |Value
---------- | --------- | --------- | ---------
-L   |L   |L   |0x0
-L   |L   |H   |0x1
-L   |H   |L   |0x2
-L   |H   |H   |0x3
-H   |L   |L   |0x4
-H   |L   |H   |0x5
-H   |H   |L   |0x6
-H   |H   |H   |0x7
+A2   |A1    |A0    |Value
+---- | ---- | ---- | ----
+L    |L     |L     |0x0
+L    |L     |H     |0x1
+L    |H     |L     |0x2
+L    |H     |H     |0x3
+H    |L     |L     |0x4
+H    |L     |H     |0x5
+H    |H     |L     |0x6
+H    |H     |H     |0x7
 
 
 #### Parameters
 * `address` The 3 bit pin-programmed slave address
 
-### `public inline  Controller(uint8_t address,TwoWire & i2cObj)` {#class_maxim_d_s_1_1_controller_1aa4858a88c37a60065e324ac144186582}
+### `Controller(uint8_t address,TwoWire & i2cObj)`
 
-Construct a new Device [Controller](#class_maxim_d_s_1_1_controller) object using the supplied TwoWire instance.
+Construct a new Device Controller object using the supplied TwoWire instance.
 
 Takes a 3-bit address value corresponding to the state of the hardware pins:
 
 
-A2   |A1   |A0   |Value
---------- | --------- | --------- | ---------
-L   |L   |L   |0x0
-L   |L   |H   |0x1
-L   |H   |L   |0x2
-L   |H   |H   |0x3
-H   |L   |L   |0x4
-H   |L   |H   |0x5
-H   |H   |L   |0x6
-H   |H   |H   |0x7
-
+A2   |A1    |A0    |Value
+---- | ---- | ---- | ----
+L    |L     |L     |0x0
+L    |L     |H     |0x1
+L    |H     |L     |0x2
+L    |H     |H     |0x3
+H    |L     |L     |0x4
+H    |L     |H     |0x5
+H    |H     |L     |0x6
+H    |H     |H     |0x7
 
 #### Parameters
 * `address` The 3 bit pin-programmed slave address 
 
-
 * `i2cObj` A reference to the TwoWire instance for transmission
 
-### `public void begin(`[`PotentiometerMode`](#class_maxim_d_s_1_1_controller_1acd744d60d5ff0489be1fdb9a03039fa1)` mode)` {#class_maxim_d_s_1_1_controller_1ac0a5e58051a2bff244b5bc816f7bf960}
+### `public void begin(`[`PotentiometerMode`](#Enums)` mode)`
 
 Initializes the controller and configures the pot to the mode supplied (33 positions be default).
 
 Should be called in setup().
 
-
 #### Parameters
 * `mode` The PotentiometerMode to use (number of wiper positions) 
 
-
-
-
-
-**See also**: [PotentiometerMode](#class_maxim_d_s_1_1_controller_1acd744d60d5ff0489be1fdb9a03039fa1)
 
 ### `public bool configure(`[`PotentiometerMode`](#class_maxim_d_s_1_1_controller_1acd744d60d5ff0489be1fdb9a03039fa1)` mode,bool enableZeroCross,bool enableNVM)` {#class_maxim_d_s_1_1_controller_1a8bd82d26b2476c449797cc4baffcced4}
 
