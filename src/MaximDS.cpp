@@ -11,7 +11,9 @@ void Controller::begin(PotentiometerMode mode /* = PotentiometerPositions33 */)
     }
 }
 
-bool Controller::configure(PotentiometerMode mode, bool enableZeroCross /* = true */, bool enableNVM /* = false */)
+bool Controller::configure(PotentiometerMode mode, 
+        bool enableZeroCross /* = true */, 
+        bool enableNVM /* = false */)
 {
     uint8_t configureRegister = ConfigureRegisterBase;
     configureRegister |= NVMEnableValue(enableNVM);

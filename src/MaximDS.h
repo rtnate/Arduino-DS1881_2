@@ -65,7 +65,8 @@
 namespace MaximDS
 {
     /**
-     * @brief Class for controlling a MaximDS digital potentiomer (DS1881 or DS1882)
+     * @brief Class for controlling a MaximDS digital potentiometer 
+     *        (DS1881 or DS1882)
      */
     class Controller
     {
@@ -96,7 +97,25 @@ namespace MaximDS
         }
 
         /**
-         * @brief Construct a new Controller object using the default Wire object
+         * @brief Generate the slave address for a MaximDS device
+         * 
+         * @param pinA0 Set to true if address pin A0 is pulled high
+         * @param pinA1 Set to true if address pin A1 is pulled high
+         * @param pinA2 Set to true if address pin A2 is pulled high
+         * 
+         * @return constexpr uint8_t The 7 bit I2C slave address
+         */
+        static inline constexpr uint8_t GetSlaveAddress(bool pinA0, 
+            bool pinA1, bool pinA2)
+        {
+            return GetSlaveAddress(((pinA2 ? 1 : 0) << 2) | 
+                                   ((pinA1 ? 1 : 0) << 1) | 
+                                   ((pinA0 ? 1 : 0) << 0));
+        }
+
+        /**
+         * @brief Construct a new Controller object using the default 
+         *        Wire object
          * 
          * @param address The 3 bit pin-programmed slave address
          */
@@ -108,7 +127,32 @@ namespace MaximDS
          * @param address The 3 bit pin-programmed slave address
          * @param i2cObj A reference to the TwoWire object for transmission
          */
-        Controller(uint8_t address, TwoWire &i2cObj) :  i2c(i2cObj), slaveAddress(GetSlaveAddress(address)){};
+        Controller(uint8_t address, TwoWire &i2cObj) :  
+            i2c(i2cObj), 
+            slaveAddress(GetSlaveAddress(address)){};
+
+
+        /**
+         * @brief Construct a new Controller object
+         * 
+         * @param pinA0 Set to true if address pin A0 is pulled high
+         * @param pinA1 Set to true if address pin A1 is pulled high
+         * @param pinA2 Set to true if address pin A2 is pulled high
+         */
+        Controller(bool pinA0, bool pinA1, bool pinA2): i2c(Wire), 
+            slaveAddress(GetSlaveAddress(pinA0, pinA1, pinA2)){};
+
+        /**
+         * @brief Construct a new Controller object
+         * 
+         * @param pinA0 Set to true if address pin A0 is pulled high
+         * @param pinA1 Set to true if address pin A1 is pulled high
+         * @param pinA2 Set to true if address pin A2 is pulled high
+         * @param i2cObj A reference to the TwoWire object for transmission
+         */
+        Controller(bool pinA0, bool pinA1, bool pinA2, TwoWire &i2cObj): 
+            i2c(i2cObj), 
+            slaveAddress(GetSlaveAddress(pinA0, pinA1, pinA2)){};
 
         /**
          * @brief Initialize the controller
@@ -125,12 +169,14 @@ namespace MaximDS
          * @param enableNVM Set to true to enable non-volatile wiper setting storage
          * @return true on success, false on bus error
          */
-        bool configure(PotentiometerMode mode, bool enableZeroCross = true, bool enableNVM = false);
+        bool configure(PotentiometerMode mode, 
+                       bool enableZeroCross = true, 
+                       bool enableNVM = false);
 
         /**
-         * @brief Sets the value of Potentiomer 0
+         * @brief Sets the value of Potentiometer 0
          * 
-         * @param value The 6 bit wiper posistion (0 == Fully On, 33 or 63 == MUTE)
+         * @param value The 6 bit wiper position (0 == Fully On, 33 or 63 == MUTE)
          * @return The status code from the Wire interface:
          *          0 .. success
          *          1 .. length to long for buffer
@@ -142,9 +188,9 @@ namespace MaximDS
         uint8_t writePot0(uint8_t value);
 
         /**
-         * @brief Sets the value of Potentiomer 1
+         * @brief Sets the value of Potentiometer 1
          * 
-         * @param value The 6 bit wiper posistion (0 == Fully On, 33 or 63 == MUTE)
+         * @param value The 6 bit wiper position (0 == Fully On, 33 or 63 == MUTE)
          * @return The status code from the Wire interface:
          *          0 .. success
          *          1 .. length to long for buffer
@@ -158,8 +204,8 @@ namespace MaximDS
         /**
          * @brief Sets the value of both potentiometers  (0 == Fully On, 33 or 63 == MUTE)
          * 
-         * @param pot0 The 6 bit wiper posistion for Potentiomer 0
-         * @param pot1 The 6 bit wiper posistion for Potentiomer 1
+         * @param pot0 The 6 bit wiper position for Potentiometer 0
+         * @param pot1 The 6 bit wiper position for Potentiometer 1
          * @return The status code from the Wire interface:
          *          0 .. success
          *          1 .. length to long for buffer
@@ -170,6 +216,14 @@ namespace MaximDS
          */
         uint8_t writePots(uint8_t pot0, uint8_t pot1);
 
+        /**
+         * @brief Gets the I2C Bus address assigned to the device
+         * 
+         * @return constexpr uint8_t The 7 bit I2C slave address
+         */
+        uint8_t getI2CBusAddress() const {
+            return slaveAddress;
+        }
     protected:
         /**
          * @brief Bit Position for PotentiometerMode configuration
@@ -180,7 +234,7 @@ namespace MaximDS
          * @brief Get the configuration value for the supplied PotentiometerMode
          * 
          * @param mode The PotentiometerMode (number of wiper positions)
-         * @return constexpr uint8_t The 6 bit configruation setting
+         * @return constexpr uint8_t The 6 bit configuration setting
          */
         static inline constexpr uint8_t PotentiometerModeValue(PotentiometerMode mode)
         {
@@ -196,7 +250,7 @@ namespace MaximDS
          * @brief Get the configuration value for enabled/disabled zero crossing detector
          * 
          * @param enable True to enable zero-crossing detection (false to disable)
-         * @return constexpr uint8_t The 6 bit configruation setting
+         * @return constexpr uint8_t The 6 bit configuration setting
          */
         static inline constexpr uint8_t ZeroCrossingEnableValue(bool enable)
         {
@@ -212,7 +266,7 @@ namespace MaximDS
          * @brief Get the configuration value for enabled/disabled non-volatile memory storage
          * 
          * @param enable True to enable non-volatile memory (false to disable)
-         * @return constexpr uint8_t The 6 bit configruation setting
+         * @return constexpr uint8_t The 6 bit configuration setting
          */
         static inline constexpr uint8_t NVMEnableValue(bool enable)
         {
