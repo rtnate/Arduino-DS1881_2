@@ -1,0 +1,3 @@
+[submodule "test/ArduinoLibTesting"]
+	path = extras/test/ArduinoLibTesting
+	url = https://github.com/rtnate/arduino-MockAndTesting.git
