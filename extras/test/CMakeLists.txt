@@ -11,7 +11,7 @@ rt_create_test_suite(arduino_DS1881_2-tests
         ${CMAKE_CURRENT_LIST_DIR}/tests/UnitTests.cpp
 )
 
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../ libDS1881_2)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/../../ libDS1881_2)
 add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/ArduinoLibTesting/MockArduino)
 
 target_link_libraries(arduino_DS1881_2 PUBLIC arduino_MockCore)
