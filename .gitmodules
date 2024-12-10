@@ -1,3 +1,3 @@
 [submodule "test/ArduinoLibTesting"]
-	path = test/ArduinoLibTesting
+	path = extras/test/ArduinoLibTesting
 	url = https://github.com/rtnate/arduino-MockAndTesting.git
