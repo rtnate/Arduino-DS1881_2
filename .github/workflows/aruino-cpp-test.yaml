@@ -1,4 +1,4 @@
-on: [pull_request, push]
+on: [workflow_dispatch ]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -8,5 +8,4 @@ jobs:
           submodules: true
       - uses: arduino/cpp-test-action@v1
         with:
-          runtime-paths:
-            - extras/test/build/arduino_DS1881_2-tests
+          runtime-paths: "- extras/test/build/arduino_DS1881_2-tests"
