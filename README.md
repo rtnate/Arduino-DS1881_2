@@ -1,9 +1,5 @@
 DS1881_2 Arduino Library
 ==========================
-<<<<<<< Updated upstream
-![GitHub License](https://img.shields.io/github/license/rtnate/Arduino-DS1881_2/)
-Arduino Library for interfacing with Maxim DS1881 and DS1882 digital potentiometers
-=======
 ![Version](https://img.shields.io/badge/Version-1.0.2-blue.svg)
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](https://opensource.org/licenses/MIT)
 ![ArduinoVersion](https://img.shields.io/badge/Arduino_Version->=1.8.6-lightgrey.svg)
@@ -58,4 +54,3 @@ digiPot.writePot1(6) //Set Ch 1 to -6 dB
 digiPot.writePots(20, 25) //Set Ch 0 to -20 dB, Ch 1 to -25dB
 digiPot.writePots(63, 63) //Set both pots to MUTE
 ```
->>>>>>> Stashed changes
